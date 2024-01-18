@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "com.adamcalculator.cheststofox.mixin.client",
+  "compatibilityLevel": "JAVA_17",
+  "client": [
+    "MinecraftClientMixin",
+    "DebugRendererMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "mixins": [
+  ]
+}

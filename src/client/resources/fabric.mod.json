@@ -1,0 +1,32 @@
+{
+	"schemaVersion": 1,
+	"id": "cheststofox",
+	"version": "${version}",
+	"name": "ChestsToFox",
+	"description": "Mod for exporting chest contents to spreadsheet format.",
+	"authors": [
+		"AdamCalculator"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "MIT",
+	"icon": "assets/cheststofox/icon.png",
+	"environment": "client",
+	"accessWidener": "cheststofox.accesswidener",
+	"entrypoints": {
+		"client": [
+			"com.adamcalculator.cheststofox.ChestsToFox"
+		]
+	},
+	"mixins": [
+		"cheststofox.client.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.14.0",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*"
+	}
+}
