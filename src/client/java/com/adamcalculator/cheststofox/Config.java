@@ -20,7 +20,7 @@ public class Config {
 
     @SerializedName("auto_close_guis")
     public boolean autoCloseWhenSaving = false;
-    public transient int autoCloseWhenSavingDelay = 500;
+    public transient int autoCloseWhenSavingDelay = 200;
 
     public boolean isSaving() {
         return savingEnable;
@@ -57,5 +57,9 @@ public class Config {
 
     public static File getConfigFile() {
         return new File(MinecraftClient.getInstance().runDirectory, "/config/cheststofox.json");
+    }
+
+    public boolean isAutoCloseGuis() {
+        return autoCloseWhenSaving;
     }
 }

@@ -1,7 +1,7 @@
 {
 	"schemaVersion": 1,
 	"id": "cheststofox",
-	"version": "${version}",
+	"version": "1.2",
 	"name": "ChestsToFox",
 	"description": "Mod for exporting chest contents to spreadsheet format.",
 	"authors": [

@@ -7,6 +7,7 @@ import org.jetbrains.annotations.Nullable;
 public final class ContainerLinker {
     @Nullable private BlockPos waitingPos;
     private long startWaitAt;
+    private boolean skipOnce;
 
     public void waitContainerDataForOpen(BlockPos pos) {
         this.waitingPos = pos;
@@ -25,5 +26,19 @@ public final class ContainerLinker {
 
     public BlockPos get() {
         return waitingPos;
+    }
+
+    public void skipOnce() {
+        this.skipOnce = true;
+    }
+
+    public boolean isSkipOnceAndDone() {
+        boolean b = this.skipOnce;
+        this.skipOnce = false;
+        return b;
+    }
+
+    public boolean isSkipOnce() {
+        return this.skipOnce;
     }
 }

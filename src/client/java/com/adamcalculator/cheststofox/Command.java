@@ -7,15 +7,18 @@ import com.mojang.brigadier.context.CommandContext;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
-import net.minecraft.text.Text;
+import net.minecraft.text.*;
+import net.minecraft.util.Formatting;
 
 import java.io.File;
+import java.util.HashMap;
 
 public final class Command {
     private static long bufferClearTimer = 0;
 
     public static void register() {
-        ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> dispatcher.register(ClientCommandManager.literal("ctf")
+        ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) ->
+                dispatcher.register(ClientCommandManager.literal("ctf")
                 .then(ClientCommandManager.literal("export")
                         .then(ClientCommandManager.literal("available")
                                 .executes(Command::exportAvailable))
@@ -24,18 +27,10 @@ public final class Command {
                                 .executes(Command::exportAll)))
 
                 .then(ClientCommandManager.literal("auto_close_gui")
-                        .then(ClientCommandManager.literal("off")
-                                .executes(Command::autoCloseGuiOff))
-
-                        .then(ClientCommandManager.literal("on")
-                                .executes(Command::autoCloseGuiOn)))
+                        .executes(Command::toggleAutoCloseGuis))
 
                 .then(ClientCommandManager.literal("saving")
-                        .then(ClientCommandManager.literal("off")
-                                .executes(Command::savingDisable))
-
-                        .then(ClientCommandManager.literal("on")
-                                .executes(Command::savingEnable)))
+                        .executes(Command::toggleSaving))
 
                 .then(ClientCommandManager.literal("buffer")
                         .then(ClientCommandManager.literal("clear")
@@ -47,25 +42,35 @@ public final class Command {
                 .executes(Command::printState)));
     }
 
-    private static int autoCloseGuiOff(CommandContext<FabricClientCommandSource> context) {
-        Config.CONFIG.setAutoClose(false);
-        context.getSource().sendFeedback(Text.of(("§c ✔ Auto-close guis disabled")));
+
+
+    private static int toggleAutoCloseGuis(CommandContext<FabricClientCommandSource> context) {
+        if (Config.CONFIG.isAutoCloseGuis()) {
+            autoCloseGuiOff(context);
+        } else {
+            autoCloseGuiOn(context);
+        }
         return 0;
     }
 
-    private static int autoCloseGuiOn(CommandContext<FabricClientCommandSource> context) {
+    private static void autoCloseGuiOff(CommandContext<FabricClientCommandSource> context) {
+        Config.CONFIG.setAutoClose(false);
+        context.getSource().sendFeedback(Text.translatable("cheststofox.command.ctf.auto_close_guis.disabled").formatted(Formatting.RED));
+    }
+
+    private static void autoCloseGuiOn(CommandContext<FabricClientCommandSource> context) {
         Config.CONFIG.setAutoClose(true);
-        context.getSource().sendFeedback(Text.of(("§a ✔ Auto-close guis enabled")));
-        return 0;
+        context.getSource().sendFeedback(Text.translatable("cheststofox.command.ctf.auto_close_guis.enabled").formatted(Formatting.GREEN));
     }
 
     private static int bufferClearOnce(CommandContext<FabricClientCommandSource> context) {
         StateMachine.clearOnce = !StateMachine.clearOnce;
         if (StateMachine.clearOnce) {
-            context.getSource().sendFeedback(Text.of(("§6 ⚠ Click to block for delete from buffer. Enter this command again for cancel deletion.")));
+            context.getSource().sendFeedback(Text.translatable("cheststofox.command.ctf.buffer.clearOnce.howto").formatted(Formatting.GOLD));
 
         } else {
-            context.getSource().sendFeedback(Text.of(("§a ✔ Deletion canceled.")));
+            context.getSource().sendFeedback(Text.translatable("cheststofox.command.ctf.buffer.clearOnce.canceled").formatted(Formatting.DARK_GREEN));
+
         }
         return 1;
     }
@@ -73,61 +78,88 @@ public final class Command {
     private static int bufferClear(CommandContext<FabricClientCommandSource> context) {
         long current = System.currentTimeMillis();
         if (current - bufferClearTimer > 2500) {
-            context.getSource().sendFeedback(Text.of(("§6 ⚠ Enter this command again to confirm deletion...")));
+            context.getSource().sendFeedback(Text.translatable("cheststofox.command.ctf.buffer.clear.double_call_notice").formatted(Formatting.GOLD));
             bufferClearTimer = current;
         } else {
             ContainerManager.clearAllMemory();
-            context.getSource().sendFeedback(Text.of(("§a ✔ Success buffer cleared!")));
+            context.getSource().sendFeedback(Text.translatable("cheststofox.command.ctf.buffer.clear.success").formatted(Formatting.GREEN));
         }
         return 1;
     }
 
-    private static int savingEnable(CommandContext<FabricClientCommandSource> context) {
-        Config.CONFIG.setSaving(true);
-        context.getSource().sendFeedback(Text.of(("§a ✔ Enabled")));
+    private static int toggleSaving(CommandContext<FabricClientCommandSource> context) {
+        if (Config.CONFIG.isSaving()) {
+            savingDisable(context);
+        } else {
+            savingEnable(context);
+        }
         return 1;
     }
 
-    private static int savingDisable(CommandContext<FabricClientCommandSource> context) {
+    private static void savingEnable(CommandContext<FabricClientCommandSource> context) {
+        Config.CONFIG.setSaving(true);
+        context.getSource().sendFeedback(Text.translatable("cheststofox.command.ctf.saving.enabled").formatted(Formatting.GREEN));
+    }
+
+    private static void savingDisable(CommandContext<FabricClientCommandSource> context) {
         Config.CONFIG.setSaving(false);
-        context.getSource().sendFeedback(Text.of(("§c ✔ Disabled")));
-        return 1;
+        context.getSource().sendFeedback(Text.translatable("cheststofox.command.ctf.saving.disabled").formatted(Formatting.RED));
     }
 
     private static int printState(CommandContext<FabricClientCommandSource> context) {
-        String saving;
-        if (Config.CONFIG.savingEnable) {
-            saving = "§aEnabled!";
-        } else {
-            saving = "§cDisabled";
-        }
+        Object saving = Text.translatable(Config.CONFIG.isSaving() ? "cheststofox.generic.boolean.enabled" : "cheststofox.generic.boolean.disabled");
+        Object autoCloseGuis = Text.translatable(Config.CONFIG.isAutoCloseGuis() ? "cheststofox.generic.boolean.enabled" : "cheststofox.generic.boolean.disabled");
 
-        String currBuff = "<empty>";
-
+        MutableText currBuff = Text.translatable("cheststofox.command.ctf.printState.buffer.empty");
+        final MutableText miniStatText = MutableText.of(TextContent.EMPTY);
         if (ContainerManager.isNotEmpty()) {
-            currBuff = " * Saved containers: %s".formatted(ContainerManager.getSavedPositions().length);
+            currBuff = Text.translatable("cheststofox.command.ctf.printState.buffer.stat", ContainerManager.getSavedPositions().length);
+            final HashMap<String, StatCollector.StatRow> miniStat = StatCollector.collectAvailable(ContainerManager.containersData);
+            int i = 0;
+            for (String id : miniStat.keySet()) {
+                StatCollector.StatRow row = miniStat.get(id);
+
+                Text rowText = Text.translatable("cheststofox.command.ctf.printState.buffer.hover_mini_stat.row",
+                        Text.literal(String.valueOf(row.getAmount())).formatted(Formatting.DARK_AQUA),
+                        Text.literal(row.getLocalized()).formatted(Formatting.GREEN),
+                        Text.literal(String.valueOf(row.getContainers().size())).formatted(Formatting.LIGHT_PURPLE));
+                miniStatText.append(rowText);
+                miniStatText.append(Text.of("\n"));
+
+                if (i++ > 7) {
+                    break;
+                }
+            }
         }
 
-        String stat = String.format("\n§6§lChestsToFox %s §r§dby PawVille:\n§r§5Saving: §r%s§r§6\n§r§3Current buffer:\n§r%s§r§6\n", ChestsToFox.prettyVersion(), saving, currBuff);
-        context.getSource().sendFeedback(Text.of(stat));
+
+        currBuff.formatted(Formatting.DARK_AQUA, Formatting.UNDERLINE)
+                .styled(style -> style.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Text.translatable("cheststofox.command.ctf.printState.buffer.hover_mini_stat", miniStatText))));
+
+        context.getSource().sendFeedback(Text.translatable("cheststofox.command.ctf.printState", Text.literal(ChestsToFox.prettyVersion()).formatted(Formatting.YELLOW), saving, autoCloseGuis, currBuff));
         return 1;
     }
 
     private static int exportAll(CommandContext<FabricClientCommandSource> context) {
         final String content = StatCollector.statToCsv(StatCollector.collectAll(ContainerManager.containersData));
-        final String filename = ChestsToFox.getCurrentNameOfExportFile();
-        final File file = new File(ChestsToFox.getExportsDir(), filename);
-        Files.writeFile(file, content);
-        context.getSource().sendFeedback(Text.of(("§a ✔ Success exported to: §2.../mods/ChestsToFox/§l" + filename).replace("/", File.separator)));
+        genericExport(context, content);
         return 1;
     }
 
     private static int exportAvailable(CommandContext<FabricClientCommandSource> context) {
         final String content = StatCollector.statToCsv(StatCollector.collectAvailable(ContainerManager.containersData));
+        genericExport(context, content);
+        return 1;
+    }
+
+    private static void genericExport(CommandContext<FabricClientCommandSource> context, String exportedString) {
         final String filename = ChestsToFox.getCurrentNameOfExportFile();
         final File file = new File(ChestsToFox.getExportsDir(), filename);
-        Files.writeFile(file, content);
-        context.getSource().sendFeedback(Text.of(("§a ✔ Success exported to: §2.../mods/ChestsToFox/§l" + filename).replace("/", File.separator)));
-        return 1;
+        Files.writeFile(file, exportedString);
+        Text filetext = Text.literal("mods/ChestsToFox/" + file.getName())
+                .formatted(Formatting.UNDERLINE, Formatting.ITALIC, Formatting.DARK_GREEN)
+                .styled(style -> style.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_FILE, ChestsToFox.getExportsDir().getAbsolutePath())));
+
+        context.getSource().sendFeedback(Text.translatable("cheststofox.command.ctf.export.success", filetext).formatted(Formatting.GREEN));
     }
 }

@@ -1,0 +1,20 @@
+{
+  "cheststofox.generic.boolean.enabled": "§aON",
+  "cheststofox.generic.boolean.disabled": "§cOFF",
+  "cheststofox.command.ctf.printState": "\n§6§lChestsToFox %s §r§dby PawVille:\n§r§5Saving: §r%s§r§6\n§r§5Auto-close guis: §r%s§r§6\n§r§3Current buffer:§r%s§r§6\n",
+  "cheststofox.command.ctf.printState.buffer.empty": "<buffer empty>",
+  "cheststofox.command.ctf.printState.buffer.stat": "\n * Saved containers: %s",
+  "cheststofox.command.ctf.printState.buffer.hover_mini_stat": "Mini-statistic:\n%s...",
+  "cheststofox.command.ctf.printState.buffer.hover_mini_stat.row": "%s - %s - in %s containers",
+  "cheststofox.command.ctf.saving.enabled": " ✔ Saving enabled",
+  "cheststofox.command.ctf.saving.disabled": " ✔ Saving disabled",
+  "cheststofox.command.ctf.auto_close_guis.enabled": " ✔ Auto-close guis enabled",
+  "cheststofox.command.ctf.auto_close_guis.disabled": " ✔ Auto-close guis disabled",
+  "cheststofox.command.ctf.buffer.clear.success": " ✔ Success buffer cleared!",
+  "cheststofox.command.ctf.buffer.clear.double_call_notice": " ⚠ Enter this command again within 2 seconds to confirm deletion...",
+  "cheststofox.command.ctf.buffer.clearOnce.howto": " ⚠ Click to block for delete from buffer. Enter this command again for cancel deletion.",
+  "cheststofox.command.ctf.buffer.clearOnce.canceled": " ✔ Deletion canceled.",
+  "cheststofox.command.ctf.buffer.clearOnce.success": " ✔ Container at (%s) removed from buffer.",
+  "cheststofox.command.ctf.buffer.clearOnce.not_found": " ✔ Container at (%s) is already not in the buffer.",
+  "cheststofox.command.ctf.export.success": " ✔ Success exported to: %s"
+}

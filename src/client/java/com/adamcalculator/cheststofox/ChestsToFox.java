@@ -14,6 +14,7 @@ import net.minecraft.client.gui.screen.ingame.ShulkerBoxScreen;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
@@ -27,11 +28,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.function.BooleanSupplier;
 
 public class ChestsToFox implements ClientModInitializer {
-	public static final int CHESTS_TO_FOX_VERSION_BUILD = 17;
-	public static final String CHESTS_TO_FOX_VERSION_NAME = "0.7 beta";
+	public static final int CHESTS_TO_FOX_VERSION_BUILD = 25;
+	public static final String CHESTS_TO_FOX_VERSION_NAME = "1.2";
 
 
 	public static final Logger LOGGER = LoggerFactory.getLogger("ChestsToFox");
@@ -73,14 +73,21 @@ public class ChestsToFox implements ClientModInitializer {
 
 		} else if (blockEntity instanceof ShulkerBoxBlockEntity shulker) {
 			baseBlock = shulker.getPos();
+
+		} else if (blockEntity instanceof EnderChestBlockEntity enderChest) {
+			CONTAINER_LINKER.skipOnce();
 		}
 
 		if (StateMachine.clearOnce) {
 			if (baseBlock == null) {
 				baseBlock = hitResult.getBlockPos();
 			}
-			ContainerManager.clearAt(baseBlock);
-			MinecraftClient.getInstance().player.sendMessage(Text.of(("§a ✔ Container at " + baseBlock.toShortString() + " removed from buffer.")));
+			if (ContainerManager.isContainerAtExists(baseBlock)) {
+				ContainerManager.clearAt(baseBlock);
+				MinecraftClient.getInstance().player.sendMessage(Text.translatable("cheststofox.command.ctf.buffer.clearOnce.success", baseBlock.toShortString()).formatted(Formatting.GREEN));
+			} else {
+				MinecraftClient.getInstance().player.sendMessage(Text.translatable("cheststofox.command.ctf.buffer.clearOnce.not_found", baseBlock.toShortString()).formatted(Formatting.DARK_GREEN));
+			}
 			StateMachine.clearOnce = false;
 			return ActionResult.FAIL;
 		} else {
@@ -110,6 +117,10 @@ public class ChestsToFox implements ClientModInitializer {
 		// when closing screen
 		if (screen == null) {
 			Screen previously = MinecraftClient.getInstance().currentScreen;
+			if (CONTAINER_LINKER.isSkipOnceAndDone()) {
+				return;
+			}
+
 			if (previously instanceof GenericContainerScreen genericContainerScreen) {
 				processInventoryForPos(genericContainerScreen.handler.getInventory(), CONTAINER_LINKER.getAndDone());
 
@@ -120,7 +131,7 @@ public class ChestsToFox implements ClientModInitializer {
 				processInventoryForPos(schulkerBoxScreen.handler.inventory, CONTAINER_LINKER.getAndDone());
 			}
 		} else {
-			if (Config.CONFIG.autoCloseWhenSaving) {
+			if (Config.CONFIG.autoCloseWhenSaving && !CONTAINER_LINKER.isSkipOnce()) {
 				if (screen instanceof GenericContainerScreen || screen instanceof HopperScreen || screen instanceof ShulkerBoxScreen) {
 					Timer timer = new Timer();
 					timer.schedule(new TimerTask() {
@@ -137,7 +148,7 @@ public class ChestsToFox implements ClientModInitializer {
 
 	public static void processInventoryForPos(Inventory inventory, BlockPos pos) {
 		if (pos == null) {
-			Debug.log("CONTAINER_LINKER currently not wait guis (server open custom gui or big network ping)");
+			Debug.log("CONTAINER_LINKER currently not wait guis (server open custom gui or big network ping???)");
 			return;
 		}
 		ContainerManager.updateContainerData(pos, inventory);

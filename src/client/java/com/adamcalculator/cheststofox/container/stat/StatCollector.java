@@ -67,12 +67,26 @@ public class StatCollector {
     }
 
     public static String statToCsv(HashMap<String, StatRow> stat) {
-        StringBuilder sb = new StringBuilder("localized,id,amount\n");
+        StringBuilder sb = new StringBuilder("\"localized\",\"id\",\"amount\"\r\n");
         for (StatRow row : stat.values()) {
-
             String localized = row.localized.replace("\"", "\"\"");
-            sb.append("\"").append(localized).append("\"").append(",").append("\"").append(row.id).append("\"").append(",").append("\"").append(row.amount).append("\"");
-            sb.append("\n");
+            sb.append("\"");
+            sb.append(localized);
+            sb.append("\"");
+
+            sb.append(",");
+
+            sb.append("\"");
+            sb.append(row.id);
+            sb.append("\"");
+
+            sb.append(",");
+
+            sb.append("\"");
+            sb.append(row.amount);
+            sb.append("\"");
+
+            sb.append("\r\n");
         }
 
         return sb.toString();
@@ -99,6 +113,18 @@ public class StatCollector {
 
         public Set<String> getContainers() {
             return containers;
+        }
+
+        public int getAmount() {
+            return amount;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public String getLocalized() {
+            return localized;
         }
     }
 }

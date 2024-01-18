@@ -1,0 +1,21 @@
+{
+  "cheststofox.generic.boolean.enabled": "§aВключено",
+  "cheststofox.generic.boolean.disabled": "§cВыключено",
+  "cheststofox.command.ctf.printState": "\n§6§lChestsToFox %s §r§dby PawVille:\n§r§5Сохранение: §r%s§r§6\n§r§5Авто-закрытие интерфейса: §r%s§r§6\n§r§3Текущий буфер:\n§r%s§r§6\n",
+  "cheststofox.command.ctf.printState.buffer.empty": "<буфер пуст>",
+  "cheststofox.command.ctf.printState.buffer.stat": " * Сохранено контейнеров: %sшт",
+  "cheststofox.command.ctf.printState.buffer.hover_mini_stat": "Мини-статистика:\n%s...",
+  "cheststofox.command.ctf.printState.buffer.hover_mini_stat.row": "%s - %s - в %s контейнерах",
+  "cheststofox.command.ctf.saving.enabled": " ✔ Сохранение включено",
+  "cheststofox.command.ctf.saving.disabled": " ✔ Сохранение отключено",
+  "cheststofox.command.ctf.auto_close_guis.enabled": " ✔ Авто-закрытие интерфейса включено",
+  "cheststofox.command.ctf.auto_close_guis.disabled": " ✔ Авто-закрытие интерфейса отключено",
+  "cheststofox.command.ctf.buffer.clear.success": " ✔ Буфер успешно отчищен!",
+  "cheststofox.command.ctf.buffer.clear.double_call_notice": " ⚠ Введите команду ещё раз в течении 2 секунд для подтверждения удаления буфера...",
+  "cheststofox.command.ctf.buffer.clearOnce.howto": " ⚠ Нажмите на блок для удаления его из буфера. Введите команду повторно для отмены удаления.",
+  "cheststofox.command.ctf.buffer.clearOnce.canceled": " ✔ Удаление отменено",
+  "cheststofox.command.ctf.buffer.clearOnce.success": " ✔ Контейнер на координатах (%s) удалён из буфера",
+  "cheststofox.command.ctf.buffer.clearOnce.not_found": " ✔ Контейнер (%s) итак был не в буфере.",
+  "cheststofox.command.ctf.export.success": " ✔ Успешно экспортировано: %s"
+
+}
