@@ -70,8 +70,8 @@ public class StatCollector {
         StringBuilder sb = new StringBuilder("localized,id,amount\n");
         for (StatRow row : stat.values()) {
 
-            String localized = row.localized;
-            sb.append(localized).append(",").append(row.id).append(",").append(row.amount);
+            String localized = row.localized.replace("\\", "\\\\").replace("\"", "\\\"");
+            sb.append("\"").append(localized).append("\"").append(",").append("\"").append(row.id).append("\"").append(",").append("\"").append(row.amount).append("\"");
             sb.append("\n");
         }
 
