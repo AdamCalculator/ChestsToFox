@@ -20,7 +20,12 @@ public class Config {
 
     @SerializedName("auto_close_guis")
     public boolean autoCloseWhenSaving = false;
-    public transient int autoCloseWhenSavingDelay = 200;
+
+    @SerializedName("auto_close_delay")
+    public int autoCloseWhenSavingDelay = 200;
+
+    @SerializedName("work_dir")
+    public String workdir = "%MINECRAFT%/config/cheststofox";
 
     public boolean isSaving() {
         return savingEnable;

@@ -30,13 +30,12 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class ChestsToFox implements ClientModInitializer {
-	public static final int CHESTS_TO_FOX_VERSION_BUILD = 25;
-	public static final String CHESTS_TO_FOX_VERSION_NAME = "1.2";
+	public static final int CHESTS_TO_FOX_VERSION_BUILD = 26;
+	public static final String CHESTS_TO_FOX_VERSION_NAME = "1.2.1";
 
 
 	public static final Logger LOGGER = LoggerFactory.getLogger("ChestsToFox");
 	public static final ContainerLinker CONTAINER_LINKER = new ContainerLinker();
-	public static final String DIR = "config/cheststofox";
 	private static final Timer timer = new Timer();
 
 
@@ -102,7 +101,7 @@ public class ChestsToFox implements ClientModInitializer {
 	}
 
 	public static File getExportsDir() {
-		return new File(MinecraftClient.getInstance().runDirectory, DIR);
+		return new File(Config.CONFIG.workdir.replace("%MINECRAFT%", MinecraftClient.getInstance().runDirectory.getAbsolutePath()));
 	}
 
 	public static String getCurrentNameOfExportFile() {
