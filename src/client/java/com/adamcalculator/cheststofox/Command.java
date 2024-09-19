@@ -156,7 +156,7 @@ public final class Command {
         final String filename = ChestsToFox.getCurrentNameOfExportFile();
         final File file = new File(ChestsToFox.getExportsDir(), filename);
         Files.writeFile(file, exportedString);
-        Text filetext = Text.literal("mods/ChestsToFox/" + file.getName())
+        Text filetext = Text.literal(ChestsToFox.DIR + "/" + file.getName())
                 .formatted(Formatting.UNDERLINE, Formatting.ITALIC, Formatting.DARK_GREEN)
                 .styled(style -> style.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_FILE, ChestsToFox.getExportsDir().getAbsolutePath())));
 

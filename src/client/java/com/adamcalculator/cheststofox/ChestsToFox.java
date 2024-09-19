@@ -36,6 +36,7 @@ public class ChestsToFox implements ClientModInitializer {
 
 	public static final Logger LOGGER = LoggerFactory.getLogger("ChestsToFox");
 	public static final ContainerLinker CONTAINER_LINKER = new ContainerLinker();
+	public static final String DIR = "config/cheststofox";
 	private static final Timer timer = new Timer();
 
 
@@ -101,7 +102,7 @@ public class ChestsToFox implements ClientModInitializer {
 	}
 
 	public static File getExportsDir() {
-		return new File(MinecraftClient.getInstance().runDirectory, "/mods/ChestsToFox/");
+		return new File(MinecraftClient.getInstance().runDirectory, DIR);
 	}
 
 	public static String getCurrentNameOfExportFile() {
