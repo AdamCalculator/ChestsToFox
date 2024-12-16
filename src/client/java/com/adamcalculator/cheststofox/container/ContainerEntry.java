@@ -1,16 +1,14 @@
 package com.adamcalculator.cheststofox.container;
 
-import com.adamcalculator.cheststofox.util.Color;
 import com.google.gson.annotations.SerializedName;
 import net.minecraft.block.Block;
 import net.minecraft.block.ShulkerBoxBlock;
-import net.minecraft.inventory.Inventories;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.ContainerComponent;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.util.collection.DefaultedList;
 
 import java.util.HashMap;
 
@@ -42,17 +40,14 @@ public class ContainerEntry {
     }
 
     private void overwriteFromShulkerBox(int slotInSource, ItemStack shulkerItemStack) {
-        NbtCompound nbtCompound = BlockItem.getBlockEntityNbt(shulkerItemStack);
-        if (nbtCompound == null) {
+        ContainerComponent containerComponent = shulkerItemStack.getOrDefault(DataComponentTypes.CONTAINER, null);
+        if (containerComponent == null) {
             return;
         }
-        DefaultedList<ItemStack> defaultedList = DefaultedList.ofSize(27, ItemStack.EMPTY);
-        Inventories.readNbt(nbtCompound, defaultedList);
-
         int slotInShulker = 0;
-        for (ItemStack itemStack : defaultedList) {
+        for (ItemStack itemStack : containerComponent.iterateNonEmpty()) {
             if (!itemStack.isEmpty()) {
-                slots.put((slotInSource * 1000) + slotInShulker, ItemEntry.ofItemStack(itemStack));
+                slots.put(((slotInSource+10)  * 1000) + slotInShulker, ItemEntry.ofItemStack(itemStack));
             }
             slotInShulker++;
         }

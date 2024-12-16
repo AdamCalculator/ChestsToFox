@@ -111,7 +111,7 @@ public final class Command {
         Object autoCloseGuis = Text.translatable(Config.CONFIG.isAutoCloseGuis() ? "cheststofox.generic.boolean.enabled" : "cheststofox.generic.boolean.disabled");
 
         MutableText currBuff = Text.translatable("cheststofox.command.ctf.printState.buffer.empty");
-        final MutableText miniStatText = MutableText.of(TextContent.EMPTY);
+        final MutableText miniStatText = Text.empty();
         if (ContainerManager.isNotEmpty()) {
             currBuff = Text.translatable("cheststofox.command.ctf.printState.buffer.stat", ContainerManager.getSavedPositions().length);
             final HashMap<String, StatCollector.StatRow> miniStat = StatCollector.collectAvailable(ContainerManager.containersData);
