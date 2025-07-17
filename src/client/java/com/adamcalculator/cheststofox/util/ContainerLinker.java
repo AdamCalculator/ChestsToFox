@@ -32,7 +32,7 @@ public final class ContainerLinker {
         this.skipOnce = true;
     }
 
-    public boolean isSkipOnceAndDone() {
+    public boolean isSkipOnceAndMakeDone() {
         boolean b = this.skipOnce;
         this.skipOnce = false;
         return b;

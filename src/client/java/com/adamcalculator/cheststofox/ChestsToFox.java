@@ -36,7 +36,6 @@ public class ChestsToFox implements ClientModInitializer {
 
 	public static final Logger LOGGER = LoggerFactory.getLogger("ChestsToFox");
 	public static final ContainerLinker CONTAINER_LINKER = new ContainerLinker();
-	private static final Timer timer = new Timer();
 
 
 	@Override
@@ -113,11 +112,10 @@ public class ChestsToFox implements ClientModInitializer {
 	public static void setScreenInject(Screen screen, CallbackInfo ci) {
 		if (!Config.CONFIG.isSaving()) return;
 
-
 		// when closing screen
 		if (screen == null) {
 			Screen previously = MinecraftClient.getInstance().currentScreen;
-			if (CONTAINER_LINKER.isSkipOnceAndDone()) {
+			if (CONTAINER_LINKER.isSkipOnceAndMakeDone()) {
 				return;
 			}
 
