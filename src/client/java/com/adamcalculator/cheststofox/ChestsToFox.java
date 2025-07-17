@@ -73,7 +73,7 @@ public class ChestsToFox implements ClientModInitializer {
 		} else if (blockEntity instanceof ShulkerBoxBlockEntity shulker) {
 			baseBlock = shulker.getPos();
 
-		} else if (blockEntity instanceof EnderChestBlockEntity enderChest) {
+		} else if (blockEntity instanceof EnderChestBlockEntity) {
 			CONTAINER_LINKER.skipOnce();
 		}
 
