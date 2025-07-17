@@ -34,8 +34,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class ChestsToFox implements ClientModInitializer {
-	public static final int CHESTS_TO_FOX_VERSION_BUILD = 27;
-	public static final String CHESTS_TO_FOX_VERSION_NAME = "1.2.2";
+	public static final int CHESTS_TO_FOX_VERSION_BUILD = 30;
+	public static final String CHESTS_TO_FOX_VERSION_NAME = "1.3";
 
 
 	public static final Logger LOGGER = LoggerFactory.getLogger("ChestsToFox");
