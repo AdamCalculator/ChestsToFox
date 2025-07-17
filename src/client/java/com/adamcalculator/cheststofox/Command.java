@@ -110,7 +110,7 @@ public final class Command {
         Object saving = Text.translatable(Config.CONFIG.isSaving() ? "cheststofox.generic.boolean.enabled" : "cheststofox.generic.boolean.disabled");
         Object autoCloseGuis = Text.translatable(Config.CONFIG.isAutoCloseGuis() ? "cheststofox.generic.boolean.enabled" : "cheststofox.generic.boolean.disabled");
 
-        MutableText currBuff = Text.translatable("cheststofox.command.ctf.printState.buffer.empty");
+        MutableText currBuff = Text.literal(" ").append(Text.translatable("cheststofox.command.ctf.printState.buffer.empty"));
         final MutableText miniStatText = Text.empty();
         if (ContainerManager.isNotEmpty()) {
             currBuff = Text.translatable("cheststofox.command.ctf.printState.buffer.stat", ContainerManager.getSavedPositions().length);
