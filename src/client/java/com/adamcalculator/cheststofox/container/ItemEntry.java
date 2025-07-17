@@ -1,5 +1,6 @@
 package com.adamcalculator.cheststofox.container;
 
+import com.adamcalculator.cheststofox.ChestsToFox;
 import com.google.gson.annotations.SerializedName;
 import net.minecraft.item.ItemStack;
 
@@ -11,7 +12,7 @@ public class ItemEntry {
     private String localized;
 
     public static ItemEntry ofItemStack(ItemStack stack) {
-        ItemEntry itemEntry = new ItemEntry(stack.getItem().toString(), stack.getCount());
+        ItemEntry itemEntry = new ItemEntry(ChestsToFox.getItemId(stack), stack.getCount());
         itemEntry.localized = stack.getName().asTruncatedString(99);
         return itemEntry;
     }

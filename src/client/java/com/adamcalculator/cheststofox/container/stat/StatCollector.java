@@ -1,5 +1,6 @@
 package com.adamcalculator.cheststofox.container.stat;
 
+import com.adamcalculator.cheststofox.ChestsToFox;
 import com.adamcalculator.cheststofox.container.ContainerEntry;
 import com.adamcalculator.cheststofox.container.ContainersData;
 import com.adamcalculator.cheststofox.util.Util;
@@ -45,7 +46,7 @@ public class StatCollector {
             if (id.equals(airIdentifier)) {
                 continue;
             }
-            String strId = id.getPath();
+            String strId = ChestsToFox.getItemId(id);
 
             StatRow row = new StatRow(strId);
             row.setLocalized(Registries.ITEM.get(id).getName().asTruncatedString(99));

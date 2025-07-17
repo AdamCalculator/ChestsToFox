@@ -12,9 +12,13 @@ import net.minecraft.client.gui.screen.ingame.GenericContainerScreen;
 import net.minecraft.client.gui.screen.ingame.HopperScreen;
 import net.minecraft.client.gui.screen.ingame.ShulkerBoxScreen;
 import net.minecraft.inventory.Inventory;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.registry.Registries;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
@@ -154,5 +158,21 @@ public class ChestsToFox implements ClientModInitializer {
 
 	public static String prettyVersion() {
 		return String.format("%s (v%s)", CHESTS_TO_FOX_VERSION_NAME, CHESTS_TO_FOX_VERSION_BUILD);
+	}
+
+	public static String getItemId(ItemStack stack) {
+		return getItemId(stack.getItem());
+	}
+
+	public static String getItemId(Item item) {
+		return getItemId(Registries.ITEM.getId(item));
+	}
+
+	/**
+	 * This method converts Identifiers of items to string ids
+	 * If you want change/modify ids in sheets, you can make this here
+	 */
+	public static String getItemId(Identifier identifier) {
+		return identifier.getPath(); // path = dirt (without 'namespace:' prefix); make toString() to minecraft:dirt
 	}
 }
