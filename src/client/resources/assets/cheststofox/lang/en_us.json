@@ -3,7 +3,7 @@
   "cheststofox.generic.boolean.disabled": "§cOFF",
   "cheststofox.command.ctf.printState": "\n§6§lChestsToFox %s §r§dby PawVille:\n§r§5Saving: §r%s§r§6\n§r§5Auto-close guis: §r%s§r§6\n§r§3Current buffer:§r%s§r§6\n",
   "cheststofox.command.ctf.printState.buffer.empty": "<buffer empty>",
-  "cheststofox.command.ctf.printState.buffer.stat": "\n * Saved containers: %s",
+  "cheststofox.command.ctf.printState.buffer.stat": "* Saved containers: %s",
   "cheststofox.command.ctf.printState.buffer.hover_mini_stat": "Mini-statistic:\n%s...",
   "cheststofox.command.ctf.printState.buffer.hover_mini_stat.row": "%s - %s - in %s containers",
   "cheststofox.command.ctf.saving.enabled": " ✔ Saving enabled",

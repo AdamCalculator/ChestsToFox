@@ -3,7 +3,7 @@
   "cheststofox.generic.boolean.disabled": "§cВыключено",
   "cheststofox.command.ctf.printState": "\n§6§lChestsToFox %s §r§dby PawVille:\n§r§5Сохранение: §r%s§r§6\n§r§5Авто-закрытие интерфейса: §r%s§r§6\n§r§3Текущий буфер:\n§r%s§r§6\n",
   "cheststofox.command.ctf.printState.buffer.empty": "<буфер пуст>",
-  "cheststofox.command.ctf.printState.buffer.stat": " * Сохранено контейнеров: %sшт",
+  "cheststofox.command.ctf.printState.buffer.stat": "* Сохранено контейнеров: %sшт",
   "cheststofox.command.ctf.printState.buffer.hover_mini_stat": "Мини-статистика:\n%s...",
   "cheststofox.command.ctf.printState.buffer.hover_mini_stat.row": "%s - %s - в %s контейнерах",
   "cheststofox.command.ctf.saving.enabled": " ✔ Сохранение включено",

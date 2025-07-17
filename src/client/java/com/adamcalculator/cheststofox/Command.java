@@ -110,9 +110,11 @@ public final class Command {
         Object saving = Text.translatable(Config.CONFIG.isSaving() ? "cheststofox.generic.boolean.enabled" : "cheststofox.generic.boolean.disabled");
         Object autoCloseGuis = Text.translatable(Config.CONFIG.isAutoCloseGuis() ? "cheststofox.generic.boolean.enabled" : "cheststofox.generic.boolean.disabled");
 
-        MutableText currBuff = Text.literal(" ").append(Text.translatable("cheststofox.command.ctf.printState.buffer.empty"));
+        MutableText currBuff;
+        String prefix;
         final MutableText miniStatText = Text.empty();
         if (ContainerManager.isNotEmpty()) {
+            prefix = "\n ";
             currBuff = Text.translatable("cheststofox.command.ctf.printState.buffer.stat", ContainerManager.getSavedPositions().length);
             final HashMap<String, StatCollector.StatRow> miniStat = StatCollector.collectAvailable(ContainerManager.containersData);
             int i = 0;
@@ -130,13 +132,17 @@ public final class Command {
                     break;
                 }
             }
+        } else {
+            prefix = " ";
+            currBuff = Text.translatable("cheststofox.command.ctf.printState.buffer.empty");
         }
 
 
         currBuff.formatted(Formatting.DARK_AQUA, Formatting.UNDERLINE)
                 .styled(style -> style.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Text.translatable("cheststofox.command.ctf.printState.buffer.hover_mini_stat", miniStatText))));
 
-        context.getSource().sendFeedback(Text.translatable("cheststofox.command.ctf.printState", Text.literal(ChestsToFox.prettyVersion()).formatted(Formatting.YELLOW), saving, autoCloseGuis, currBuff));
+        MutableText buffWithPref = Text.literal(prefix).append(currBuff);
+        context.getSource().sendFeedback(Text.translatable("cheststofox.command.ctf.printState", Text.literal(ChestsToFox.prettyVersion()).formatted(Formatting.YELLOW), saving, autoCloseGuis, buffWithPref));
         return 1;
     }
 
