@@ -7,7 +7,7 @@ public class Debug {
     public static void log(String s) {
         ChestsToFox.LOGGER.info(s);
         try {
-            MinecraftClient.getInstance().player.sendMessage(Text.of("§6 ⚠ ChestsToFox: " + s));
+            MinecraftClient.getInstance().player.sendMessage(Text.of("§6 ⚠ ChestsToFox: " + s), false);
         } catch (Exception ignored) {}
     }
 }

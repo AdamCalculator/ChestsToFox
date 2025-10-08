@@ -4,11 +4,13 @@ import com.adamcalculator.cheststofox.RenderInjecting;
 import com.adamcalculator.cheststofox.container.ContainerManager;
 import net.minecraft.block.entity.*;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.render.Frustum;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.debug.DebugRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.profiler.Profiler;
+import net.minecraft.util.profiler.Profilers;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -17,9 +19,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(DebugRenderer.class)
 public abstract class DebugRendererMixin {
     @Inject(at = @At("HEAD"), method = "render")
-    private void render(MatrixStack matrices, VertexConsumerProvider.Immediate vertexConsumers, double cameraX, double cameraY, double cameraZ, CallbackInfo ci) {
+    private void render(MatrixStack matrices, Frustum frustum, VertexConsumerProvider.Immediate vertexConsumers, double cameraX, double cameraY, double cameraZ, CallbackInfo ci) {
         final MinecraftClient client = MinecraftClient.getInstance();
-        final Profiler profiler = client.getProfiler();
+        final Profiler profiler = Profilers.get();
 
         profiler.push("mixin:ChestsToFox-highlights");
         for (final BlockPos pos : ContainerManager.getSavedPositions()) {

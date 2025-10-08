@@ -139,7 +139,7 @@ public final class Command {
 
 
         currBuff.formatted(Formatting.DARK_AQUA, Formatting.UNDERLINE)
-                .styled(style -> style.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Text.translatable("cheststofox.command.ctf.printState.buffer.hover_mini_stat", miniStatText))));
+                .styled(style -> style.withHoverEvent(new HoverEvent.ShowText(Text.translatable("cheststofox.command.ctf.printState.buffer.hover_mini_stat", miniStatText))));
 
         MutableText buffWithPref = Text.literal(prefix).append(currBuff);
         context.getSource().sendFeedback(Text.translatable("cheststofox.command.ctf.printState", Text.literal(ChestsToFox.prettyVersion()).formatted(Formatting.YELLOW), saving, autoCloseGuis, buffWithPref));
@@ -164,7 +164,7 @@ public final class Command {
         Files.writeFile(file, exportedString);
         Text filetext = Text.literal(Config.CONFIG.workdir.replace("%MINECRAFT%", ".minecraft") + "/" + file.getName())
                 .formatted(Formatting.UNDERLINE, Formatting.ITALIC, Formatting.DARK_GREEN)
-                .styled(style -> style.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_FILE, ChestsToFox.getExportsDir().getAbsolutePath())));
+                .styled(style -> style.withClickEvent(new ClickEvent.OpenFile(ChestsToFox.getExportsDir().getAbsolutePath())));
 
         context.getSource().sendFeedback(Text.translatable("cheststofox.command.ctf.export.success", filetext).formatted(Formatting.GREEN));
     }

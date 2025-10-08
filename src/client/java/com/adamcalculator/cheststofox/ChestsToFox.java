@@ -87,9 +87,9 @@ public class ChestsToFox implements ClientModInitializer {
 			}
 			if (ContainerManager.isContainerAtExists(baseBlock)) {
 				ContainerManager.clearAt(baseBlock);
-				MinecraftClient.getInstance().player.sendMessage(Text.translatable("cheststofox.command.ctf.buffer.clearOnce.success", baseBlock.toShortString()).formatted(Formatting.GREEN));
+				MinecraftClient.getInstance().player.sendMessage(Text.translatable("cheststofox.command.ctf.buffer.clearOnce.success", baseBlock.toShortString()).formatted(Formatting.GREEN), false);
 			} else {
-				MinecraftClient.getInstance().player.sendMessage(Text.translatable("cheststofox.command.ctf.buffer.clearOnce.not_found", baseBlock.toShortString()).formatted(Formatting.DARK_GREEN));
+				MinecraftClient.getInstance().player.sendMessage(Text.translatable("cheststofox.command.ctf.buffer.clearOnce.not_found", baseBlock.toShortString()).formatted(Formatting.DARK_GREEN), false);
 			}
 			StateMachine.clearOnce = false;
 			return ActionResult.FAIL;
